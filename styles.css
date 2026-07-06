@@ -47,7 +47,7 @@ img {
 }
 
 .view.is-active {
-  display: block;
+  display: block !important;
 }
 
 .login-view {
