@@ -3,127 +3,204 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Dotti UX/UI case study presentation site.">
-    <title>Dotti | UX/UI Case Study</title>
+    <meta name="description" content="Dotti interactive parenting assistant demo app.">
+    <title>Dotti | Parenting Assistant</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
     <main>
       <section class="login-view" id="loginView" aria-labelledby="loginTitle">
-        <div class="brand-mark" aria-hidden="true">
+        <div class="login-art" aria-hidden="true">
           <img src="assets/dotti-see-u-soon.png" alt="">
         </div>
         <form class="login-panel" id="loginForm">
-          <p class="eyebrow">Private preview</p>
+          <p class="eyebrow">Private app demo</p>
           <h1 id="loginTitle">Dotti</h1>
-          <p class="login-copy">A quiet preview space for the UX/UI case study and product story.</p>
+          <p class="login-copy">A working prototype for calmer parenting days.</p>
           <label for="username">Username</label>
           <input id="username" name="username" autocomplete="username" required>
           <label for="password">Password</label>
           <input id="password" name="password" type="password" autocomplete="current-password" required>
           <p class="error-message" id="loginError" role="alert"></p>
-          <button type="submit">Enter preview</button>
+          <button class="button primary" type="submit">Enter app</button>
         </form>
       </section>
 
-      <section class="site-view is-hidden" id="siteView">
-        <header class="hero">
-          <nav class="topbar" aria-label="Primary navigation">
-            <a class="wordmark" href="#overview">Dotti</a>
-            <div class="nav-links">
-              <a href="#story">Story</a>
-              <a href="#research">Research</a>
-              <a href="#screens">Screens</a>
-              <button class="ghost-button" id="lockButton" type="button">Lock</button>
-            </div>
+      <section class="app-shell is-hidden" id="appView">
+        <aside class="sidebar" aria-label="Dotti sections">
+          <a class="app-brand" href="#" data-view-link="home">
+            <img src="assets/dotti-see-u-soon.png" alt="">
+            <span>Dotti</span>
+          </a>
+          <nav class="side-nav">
+            <button class="nav-item is-active" type="button" data-view-link="home">Home</button>
+            <button class="nav-item" type="button" data-view-link="reflect">Reflect</button>
+            <button class="nav-item" type="button" data-view-link="plan">Plan</button>
+            <button class="nav-item" type="button" data-view-link="assistant">Assistant</button>
+            <button class="nav-item" type="button" data-view-link="profile">Profile</button>
           </nav>
-          <div class="hero-grid">
-            <div class="hero-copy">
-              <p class="eyebrow">UX/UI design case study</p>
-              <h2>AI support for calmer parenting days.</h2>
-              <p>Dotti turns scattered parenting pressure into a guided, supportive daily experience: reflection, planning, reassurance, and next steps in one friendly product system.</p>
-              <div class="hero-actions">
-                <a class="primary-link" href="#screens">View screens</a>
-                <a class="secondary-link" href="#research">Read insights</a>
+          <button class="button quiet lock-button" id="lockButton" type="button">Lock app</button>
+        </aside>
+
+        <section class="app-main">
+          <header class="app-header">
+            <div>
+              <p class="eyebrow" id="todayLabel">Today</p>
+              <h2 id="screenTitle">Good morning, Noa</h2>
+            </div>
+            <div class="header-actions">
+              <button class="button quiet" type="button" id="resetButton">Reset demo</button>
+              <button class="button primary" type="button" data-view-link="assistant">Ask Dotti</button>
+            </div>
+          </header>
+
+          <section class="view is-active" id="homeView" data-view="home">
+            <div class="hero-card">
+              <div>
+                <p class="eyebrow">Your calm start</p>
+                <h3 id="homeHeadline">You have 4 guided steps for this afternoon.</h3>
+                <p id="homeSummary">Dotti noticed a busy school pickup window and prepared a softer plan with snack, transition, and bedtime support.</p>
+                <div class="hero-actions">
+                  <button class="button primary" type="button" data-view-link="plan">Open plan</button>
+                  <button class="button secondary" type="button" data-view-link="reflect">Check in</button>
+                </div>
+              </div>
+              <div class="pulse-panel">
+                <span id="calmScore">72</span>
+                <p>calm score</p>
               </div>
             </div>
-            <figure class="phone-preview">
-              <img src="assets/dotti-case-study.jpg" alt="Dotti case study overview with app screens and research sections." fetchpriority="high">
-            </figure>
-          </div>
-        </header>
 
-        <section class="summary-band" id="overview" aria-label="Project summary">
-          <article>
-            <span>Role</span>
-            <strong>UX research, UI design, branding</strong>
-          </article>
-          <article>
-            <span>Product</span>
-            <strong>AI companion app for parents</strong>
-          </article>
-          <article>
-            <span>Focus</span>
-            <strong>Calm, trust, guided decisions</strong>
-          </article>
+            <div class="dashboard-grid">
+              <article class="panel">
+                <div class="panel-head">
+                  <h3>Next best action</h3>
+                  <span class="tag">Now</span>
+                </div>
+                <p id="nextAction">Pack a water bottle and a small snack before pickup.</p>
+                <button class="button secondary" type="button" id="completeNextAction">Mark done</button>
+              </article>
+              <article class="panel">
+                <div class="panel-head">
+                  <h3>Today's rhythm</h3>
+                  <span class="tag mint">Live</span>
+                </div>
+                <div class="timeline" id="timelineList"></div>
+              </article>
+              <article class="panel">
+                <div class="panel-head">
+                  <h3>Needs map</h3>
+                  <span class="tag coral" id="needsCount">3 active</span>
+                </div>
+                <div class="need-cloud" id="needCloud"></div>
+              </article>
+            </div>
+          </section>
+
+          <section class="view" id="reflectView" data-view="reflect">
+            <div class="section-title">
+              <p class="eyebrow">Needs reflection</p>
+              <h3>What is hardest right now?</h3>
+            </div>
+            <form class="reflection-panel" id="reflectionForm">
+              <label for="stressRange">Current pressure</label>
+              <input id="stressRange" name="stress" type="range" min="1" max="10" value="6">
+              <div class="range-row">
+                <span>Steady</span>
+                <strong id="stressValue">6</strong>
+                <span>Overloaded</span>
+              </div>
+
+              <fieldset>
+                <legend>Choose the needs Dotti should support today</legend>
+                <div class="choice-grid" id="needChoices"></div>
+              </fieldset>
+
+              <label for="reflectionNote">Short note</label>
+              <textarea id="reflectionNote" name="note" rows="4" placeholder="Example: Pickup is rushed and bedtime has been tense."></textarea>
+              <button class="button primary" type="submit">Update Dotti</button>
+            </form>
+            <aside class="panel recommendation">
+              <h3>Dotti's read</h3>
+              <p id="recommendationText">Choose what feels heavy today and Dotti will shape the next plan around it.</p>
+            </aside>
+          </section>
+
+          <section class="view" id="planView" data-view="plan">
+            <div class="section-title">
+              <p class="eyebrow">Assisted day</p>
+              <h3>Step-by-step plan</h3>
+            </div>
+            <div class="plan-board" id="planBoard"></div>
+            <div class="panel plan-tools">
+              <div>
+                <h3>Generate a softer evening</h3>
+                <p>Dotti can rebuild the plan from your active needs and pressure level.</p>
+              </div>
+              <button class="button primary" type="button" id="generatePlan">Generate plan</button>
+            </div>
+          </section>
+
+          <section class="view" id="assistantView" data-view="assistant">
+            <div class="section-title">
+              <p class="eyebrow">Dotti assistant</p>
+              <h3>Ask for practical support</h3>
+            </div>
+            <div class="chat-panel">
+              <div class="chat-log" id="chatLog" aria-live="polite"></div>
+              <form class="chat-form" id="chatForm">
+                <input id="chatInput" name="message" placeholder="Ask about bedtime, transitions, meals, or stress..." autocomplete="off">
+                <button class="button primary" type="submit">Send</button>
+              </form>
+            </div>
+            <div class="quick-prompts">
+              <button type="button" data-prompt="Bedtime is becoming a fight. What should I try?">Bedtime help</button>
+              <button type="button" data-prompt="We have a hard transition after pickup. Give me a plan.">Pickup transition</button>
+              <button type="button" data-prompt="I feel overwhelmed. Give me one tiny next step.">Tiny next step</button>
+            </div>
+          </section>
+
+          <section class="view" id="profileView" data-view="profile">
+            <div class="section-title">
+              <p class="eyebrow">Family setup</p>
+              <h3>Personalize the demo</h3>
+            </div>
+            <form class="profile-grid" id="profileForm">
+              <label>
+                Parent name
+                <input name="parentName" value="Noa">
+              </label>
+              <label>
+                Child name
+                <input name="childName" value="Maya">
+              </label>
+              <label>
+                Child age
+                <input name="childAge" value="5">
+              </label>
+              <label>
+                Main routine
+                <select name="routine">
+                  <option>School pickup</option>
+                  <option>Morning routine</option>
+                  <option>Bedtime</option>
+                  <option>Weekend planning</option>
+                </select>
+              </label>
+              <button class="button primary" type="submit">Save profile</button>
+            </form>
+          </section>
         </section>
 
-        <section class="content-section split" id="story">
-          <div>
-            <p class="eyebrow">Product idea</p>
-            <h2>From chaos to calm, one assisted step at a time.</h2>
-          </div>
-          <div class="text-stack">
-            <p>Dotti is designed around the emotional load of parenting: many small decisions, limited energy, and a need for support that feels immediate without becoming clinical or cold.</p>
-            <p>The visual language balances a playful character with structured flows, giving the product warmth while keeping the interface clean enough for repeated daily use.</p>
-          </div>
-        </section>
-
-        <section class="content-section" id="research">
-          <div class="section-heading">
-            <p class="eyebrow">Research signals</p>
-            <h2>What the case study surfaces</h2>
-          </div>
-          <div class="insight-grid">
-            <article>
-              <span>01</span>
-              <h3>Parents need relief from mental clutter.</h3>
-              <p>The experience emphasizes quick orientation, gentle prompts, and visible progress instead of dense dashboards.</p>
-            </article>
-            <article>
-              <span>02</span>
-              <h3>Trust matters before automation.</h3>
-              <p>The design uses human wording, transparent task cards, and small guided actions to make AI feel supportive.</p>
-            </article>
-            <article>
-              <span>03</span>
-              <h3>Daily rhythm beats one-time setup.</h3>
-              <p>Flows are organized around recurring needs: overview, reflection, selected tasks, and assisted recommendations.</p>
-            </article>
-          </div>
-        </section>
-
-        <section class="process-band" id="screens">
-          <div class="section-heading">
-            <p class="eyebrow">Design process</p>
-            <h2>Wireframes, component logic, and final screens</h2>
-          </div>
-          <figure class="process-image">
-            <img src="assets/dotti-process.jpg" alt="Dotti component library and mobile screen design process." loading="lazy">
-          </figure>
-        </section>
-
-        <section class="content-section final-note">
-          <img src="assets/dotti-see-u-soon.png" alt="Dotti mascot with See U Soon message." loading="lazy">
-          <div>
-            <p class="eyebrow">Preview built for sharing</p>
-            <h2>A focused live page for the designer to review.</h2>
-            <p>This page is a compact presentation layer based on the Behance case study assets, prepared for private viewing and GitHub Pages deployment.</p>
-          </div>
-        </section>
+        <nav class="mobile-nav" aria-label="Mobile navigation">
+          <button class="nav-item is-active" type="button" data-view-link="home">Home</button>
+          <button class="nav-item" type="button" data-view-link="reflect">Reflect</button>
+          <button class="nav-item" type="button" data-view-link="plan">Plan</button>
+          <button class="nav-item" type="button" data-view-link="assistant">Ask</button>
+        </nav>
       </section>
     </main>
     <script src="script.js"></script>
