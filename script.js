@@ -4,19 +4,19 @@ const credentials = {
 };
 
 const defaultState = {
-  parentName: "Noa",
-  childName: "Maya",
+  parentName: "נועה",
+  childName: "מאיה",
   childAge: "5",
-  routine: "School pickup",
+  routine: "איסוף מהגן",
   stress: 6,
-  needs: ["Transitions", "Bedtime", "Emotional regulation"],
+  needs: ["מעברים", "שעת שינה", "ויסות רגשי"],
   note: "",
   completedTasks: [],
   completedDailyTasks: [],
   messages: [
     {
       role: "dotti",
-      text: "Hi Noa. I am here with a calm plan, not a perfect plan. What feels heaviest today?"
+      text: "היי נועה. אני כאן כדי לבנות תוכנית רגועה, לא מושלמת. מה הכי מכביד היום?"
     }
   ]
 };
@@ -55,96 +55,125 @@ const chatInput = document.querySelector("#chatInput");
 const profileForm = document.querySelector("#profileForm");
 
 const availableNeeds = [
-  "Transitions",
-  "Bedtime",
-  "Meals",
-  "Emotional regulation",
-  "School prep",
-  "Parent energy",
-  "Sibling conflict",
-  "Screen time"
+  "מעברים",
+  "שעת שינה",
+  "אוכל",
+  "ויסות רגשי",
+  "התארגנות לגן",
+  "אנרגיה של ההורה",
+  "ריבים בין אחים",
+  "מסכים"
 ];
 
 const routineTemplates = {
-  "School pickup": [
-    ["14:45", "Before pickup", "Prepare snack, water, and one low-pressure greeting."],
-    ["15:20", "Transition home", "Offer two choices: quiet time or music in the car."],
-    ["16:00", "Quiet pause", "Ten minutes of decompression before requests."],
-    ["19:15", "Bedtime bridge", "Use one repeated sentence and keep the room calm."]
+  "איסוף מהגן": [
+    ["14:45", "לפני האיסוף", "להכין נשנוש, מים ומשפט פתיחה רגוע."],
+    ["15:20", "מעבר הביתה", "להציע שתי אפשרויות: זמן שקט או מוזיקה באוטו."],
+    ["16:00", "הפסקה שקטה", "עשר דקות של הורדת עומס לפני בקשות ומשימות."],
+    ["19:15", "גשר לשינה", "להשתמש במשפט קבוע אחד ולשמור על חדר רגוע."]
   ],
-  "Morning routine": [
-    ["06:55", "Wake softly", "Start with light, water, and one simple sentence."],
-    ["07:15", "Two-step getting dressed", "Put clothes in order and avoid extra options."],
-    ["07:45", "Exit cue", "Use the same final phrase every morning."],
-    ["08:05", "After drop-off", "Take one minute to breathe before the next task."]
+  "שגרת בוקר": [
+    ["06:55", "התעוררות רכה", "אור, מים ומשפט אחד פשוט לפתיחת היום."],
+    ["07:15", "התלבשות בשני צעדים", "להניח בגדים לפי סדר ולהימנע מעודף בחירות."],
+    ["07:45", "סימן יציאה", "להשתמש באותו משפט סיום בכל בוקר."],
+    ["08:05", "אחרי פרידה", "לקחת דקה לנשום לפני המשימה הבאה."]
   ],
-  "Bedtime": [
-    ["18:20", "Dinner landing", "Reduce decisions and name the next two steps."],
-    ["18:50", "Body calm", "Warm bath, dim light, or five slow breaths."],
-    ["19:10", "Room routine", "Story, water, toilet, one goodnight phrase."],
-    ["19:25", "Boundary repeat", "Repeat the same kind sentence without negotiation."]
+  "שעת שינה": [
+    ["18:20", "נחיתה אחרי ארוחת ערב", "להפחית החלטות ולומר את שני הצעדים הבאים."],
+    ["18:50", "הרגעת הגוף", "אמבטיה חמימה, אור עמום או חמש נשימות איטיות."],
+    ["19:10", "שגרת חדר", "סיפור, מים, שירותים ומשפט לילה טוב קבוע."],
+    ["19:25", "גבול חוזר", "לחזור על אותו משפט נעים בלי להיכנס למשא ומתן."]
   ],
-  "Weekend planning": [
-    ["09:00", "Anchor the day", "Choose one outing and one home activity."],
-    ["11:30", "Snack buffer", "Add food before the difficult transition."],
-    ["14:00", "Quiet block", "Protect a calm hour with low stimulation."],
-    ["17:30", "Evening preview", "Tell the child what happens before bedtime."]
+  "תכנון סוף שבוע": [
+    ["09:00", "עוגן ליום", "לבחור פעילות אחת בחוץ ופעילות אחת בבית."],
+    ["11:30", "מרווח אוכל", "להכניס נשנוש לפני מעבר שעלול להיות קשה."],
+    ["14:00", "שעה שקטה", "לשמור שעה רגועה עם מעט גירויים."],
+    ["17:30", "תצוגה מקדימה לערב", "להגיד לילד/ה מה קורה לפני שעת השינה."]
   ]
 };
 
 const dailyTasks = [
-  { id: "shop-diapers", category: "Shopping", title: "Buy diapers", body: "Check size before leaving and buy a backup pack if you are low." },
-  { id: "shop-wipes", category: "Shopping", title: "Buy wet wipes", body: "Add one pack for home and one small pack for the bag." },
-  { id: "shop-formula", category: "Shopping", title: "Buy formula or milk", body: "Check the exact brand and stage before checkout." },
-  { id: "shop-groceries", category: "Shopping", title: "Go to the grocery store", body: "Bread, eggs, fruit, yogurt, vegetables, and one easy dinner option." },
-  { id: "shop-snacks", category: "Shopping", title: "Restock kids' snacks", body: "Choose two simple snacks for school, pickup, or the car." },
-  { id: "shop-medicine", category: "Shopping", title: "Restock basic medicine", body: "Check thermometer, fever reducer, saline, and plasters." },
-  { id: "shop-bag-items", category: "Shopping", title: "Refill stroller or diaper bag", body: "Diapers, wipes, spare clothes, snack, water, and a small toy." },
-  { id: "baby-change", category: "Baby care", title: "Change diaper before leaving", body: "Do it before the transition so leaving the house is easier." },
-  { id: "baby-cream", category: "Baby care", title: "Apply diaper cream", body: "Use cream if there is redness or after a long diaper stretch." },
-  { id: "baby-bath", category: "Baby care", title: "Prepare bath", body: "Towel, pajamas, diaper, cream, and clothes ready before water." },
-  { id: "baby-clothes", category: "Baby care", title: "Pack spare clothes", body: "One full outfit, socks, and a plastic bag for dirty clothes." },
-  { id: "baby-nails", category: "Baby care", title: "Trim nails", body: "Do it after bath or sleep when the child is calmer." },
-  { id: "baby-sunscreen", category: "Baby care", title: "Apply sunscreen", body: "Use before playground, pickup walk, or any outdoor plan." },
-  { id: "baby-water", category: "Baby care", title: "Fill child water bottle", body: "Put it near the door or inside the school bag." },
-  { id: "food-breakfast", category: "Food", title: "Prepare breakfast", body: "Keep it simple: protein, fruit, and one familiar option." },
-  { id: "food-lunchbox", category: "Food", title: "Pack lunchbox", body: "Main item, fruit, snack, water, and napkin." },
-  { id: "food-dinner", category: "Food", title: "Plan easy dinner", body: "Pick one meal that can survive interruptions." },
-  { id: "food-defrost", category: "Food", title: "Defrost dinner item", body: "Move it from freezer to fridge early in the day." },
-  { id: "food-bottles", category: "Food", title: "Wash bottles or cups", body: "Wash, dry, and place them where morning routine starts." },
-  { id: "food-fruit", category: "Food", title: "Cut fruit for later", body: "Prepare a small container for pickup or after school." },
-  { id: "food-grocery-list", category: "Food", title: "Write grocery list", body: "Add only what is missing for the next two days." },
-  { id: "home-laundry", category: "Home", title: "Do kids' laundry", body: "Start one small load: pajamas, socks, school clothes." },
-  { id: "home-fold", category: "Home", title: "Fold clean clothes", body: "Focus only on child clothes if time is short." },
-  { id: "home-dishes", category: "Home", title: "Run dishwasher", body: "Clear bottles, lunchboxes, and dinner dishes first." },
-  { id: "home-trash", category: "Home", title: "Take out trash", body: "Include diaper bin or bathroom trash if needed." },
-  { id: "home-toys", category: "Home", title: "Tidy toy area", body: "Use one basket tidy, not a full cleanup." },
-  { id: "home-bag", category: "Home", title: "Prepare tomorrow's bag", body: "Clothes, water, forms, lunchbox, and comfort item." },
-  { id: "home-car", category: "Home", title: "Clean car seat area", body: "Remove crumbs, old snacks, wet wipes, and trash." },
-  { id: "school-form", category: "School", title: "Sign school form", body: "Check bag, messages, and parent group reminders." },
-  { id: "school-clothes", category: "School", title: "Lay out school clothes", body: "Choose clothes at night to reduce morning decisions." },
-  { id: "school-message", category: "School", title: "Message teacher or daycare", body: "Send updates about pickup, medicine, or missing items." },
-  { id: "school-payment", category: "School", title: "Pay school or activity fee", body: "Handle it now if it is blocking registration." },
-  { id: "school-showtell", category: "School", title: "Prepare show-and-tell item", body: "Put it in the bag before bedtime." },
-  { id: "school-activity", category: "School", title: "Pack activity gear", body: "Shoes, swimsuit, towel, instrument, or sports clothes." },
-  { id: "health-appointment", category: "Health", title: "Book doctor appointment", body: "Add symptoms, preferred hours, and child ID if needed." },
-  { id: "health-medicine", category: "Health", title: "Give medicine on time", body: "Set a timer and write down the dose time." },
-  { id: "health-vitamins", category: "Health", title: "Give vitamins", body: "Attach it to breakfast or tooth brushing." },
-  { id: "health-temperature", category: "Health", title: "Check temperature", body: "Log the time and result if the child is sick." },
-  { id: "health-insurance", category: "Health", title: "Upload insurance document", body: "Take a photo and save it before you forget." },
-  { id: "health-dentist", category: "Health", title: "Schedule dentist checkup", body: "Pick a morning slot if the child handles it better." },
-  { id: "sleep-pajamas", category: "Sleep", title: "Set pajamas and diaper", body: "Put them in the bathroom before bath starts." },
-  { id: "sleep-story", category: "Sleep", title: "Choose bedtime story", body: "Offer two books, not the whole shelf." },
-  { id: "sleep-room", category: "Sleep", title: "Prepare sleep room", body: "Dim light, water, comfort item, and white noise if used." },
-  { id: "sleep-routine", category: "Sleep", title: "Start bedtime routine early", body: "Begin ten minutes before the usual friction starts." },
-  { id: "sleep-wakeup", category: "Sleep", title: "Prepare morning wake-up", body: "Clothes, bag, and breakfast idea ready tonight." },
-  { id: "admin-bills", category: "Parent admin", title: "Pay household bill", body: "Handle one bill only, then stop." },
-  { id: "admin-calendar", category: "Parent admin", title: "Update family calendar", body: "Add appointments, pickup changes, birthdays, and activities." },
-  { id: "admin-babysitter", category: "Parent admin", title: "Confirm babysitter", body: "Send time, address, food notes, and bedtime routine." },
-  { id: "admin-call", category: "Parent admin", title: "Return important call", body: "Doctor, school, insurance, delivery, or family logistics." },
-  { id: "admin-budget", category: "Parent admin", title: "Check weekly spending", body: "Look at groceries, pharmacy, school, and activities." },
-  { id: "admin-parent-rest", category: "Parent admin", title: "Plan one parent break", body: "Ten minutes alone, shower, walk, or quiet coffee counts." }
+  { id: "shop-diapers", category: "קניות", title: "לקנות חיתולים", body: "לבדוק מידה לפני שיוצאים ולקנות חבילת גיבוי אם נשאר מעט." },
+  { id: "shop-wipes", category: "קניות", title: "לקנות מגבונים", body: "חבילה אחת לבית וחבילה קטנה לתיק." },
+  { id: "shop-formula", category: "קניות", title: "לקנות תמ״ל או חלב", body: "לבדוק מותג, שלב וכמות לפני התשלום." },
+  { id: "shop-groceries", category: "קניות", title: "ללכת למכולת", body: "לחם, ביצים, פירות, יוגורט, ירקות ואפשרות פשוטה לארוחת ערב." },
+  { id: "shop-snacks", category: "קניות", title: "לחדש מלאי נשנושים", body: "לבחור שני נשנושים פשוטים לגן, לאיסוף או לאוטו." },
+  { id: "shop-medicine", category: "קניות", title: "להשלים תרופות בסיסיות", body: "לבדוק מדחום, מוריד חום, מי מלח ופלסטרים." },
+  { id: "shop-bag-items", category: "קניות", title: "למלא תיק החתלה או עגלה", body: "חיתולים, מגבונים, בגדים להחלפה, נשנוש, מים ומשחק קטן." },
+  { id: "baby-change", category: "טיפול בילד", title: "להחליף חיתול לפני יציאה", body: "לעשות את זה לפני המעבר כדי שהיציאה תהיה קלה יותר." },
+  { id: "baby-cream", category: "טיפול בילד", title: "למרוח משחת החתלה", body: "למרוח אם יש אדמומיות או אחרי פרק זמן ארוך עם חיתול." },
+  { id: "baby-bath", category: "טיפול בילד", title: "להכין אמבטיה", body: "מגבת, פיג׳מה, חיתול, משחה ובגדים מוכנים לפני המים." },
+  { id: "baby-clothes", category: "טיפול בילד", title: "לארוז בגדים להחלפה", body: "סט מלא, גרביים ושקית לבגדים מלוכלכים." },
+  { id: "baby-nails", category: "טיפול בילד", title: "לגזור ציפורניים", body: "עדיף אחרי אמבטיה או בזמן שהילד/ה רגועים." },
+  { id: "baby-sunscreen", category: "טיפול בילד", title: "למרוח קרם הגנה", body: "לפני גינה, הליכה לאיסוף או כל יציאה לשמש." },
+  { id: "baby-water", category: "טיפול בילד", title: "למלא בקבוק מים", body: "להניח ליד הדלת או בתוך תיק הגן." },
+  { id: "food-breakfast", category: "אוכל", title: "להכין ארוחת בוקר", body: "פשוט: חלבון, פרי ואפשרות מוכרת אחת." },
+  { id: "food-lunchbox", category: "אוכל", title: "להכין קופסת אוכל", body: "מנה עיקרית, פרי, נשנוש, מים ומפית." },
+  { id: "food-dinner", category: "אוכל", title: "לתכנן ארוחת ערב קלה", body: "לבחור ארוחה שיכולה לשרוד הפרעות באמצע." },
+  { id: "food-defrost", category: "אוכל", title: "להפשיר משהו לארוחת ערב", body: "להעביר מהמקפיא למקרר מוקדם ביום." },
+  { id: "food-bottles", category: "אוכל", title: "לשטוף בקבוקים או כוסות", body: "לשטוף, לייבש ולהניח במקום שבו מתחיל הבוקר." },
+  { id: "food-fruit", category: "אוכל", title: "לחתוך פירות להמשך היום", body: "להכין קופסה קטנה לאיסוף או אחרי הגן." },
+  { id: "food-grocery-list", category: "אוכל", title: "לכתוב רשימת קניות", body: "להוסיף רק מה שחסר ליומיים הקרובים." },
+  { id: "home-laundry", category: "בית", title: "לעשות כביסה לילדים", body: "להפעיל מכונה קטנה: פיג׳מות, גרביים ובגדי גן." },
+  { id: "home-fold", category: "בית", title: "לקפל בגדים נקיים", body: "אם הזמן קצר, להתמקד רק בבגדי הילדים." },
+  { id: "home-dishes", category: "בית", title: "להפעיל מדיח", body: "להתחיל מבקבוקים, קופסאות אוכל וכלים מארוחת ערב." },
+  { id: "home-trash", category: "בית", title: "להוציא זבל", body: "לבדוק גם פח חיתולים או פח אמבטיה אם צריך." },
+  { id: "home-toys", category: "בית", title: "לסדר אזור משחקים", body: "סידור סל אחד בלבד, לא ניקיון מלא." },
+  { id: "home-bag", category: "בית", title: "להכין תיק למחר", body: "בגדים, מים, טפסים, קופסת אוכל וחפץ מעבר." },
+  { id: "home-car", category: "בית", title: "לנקות אזור כיסא בטיחות", body: "להוציא פירורים, נשנושים ישנים, מגבונים וזבל." },
+  { id: "school-form", category: "גן ובית ספר", title: "לחתום על טופס", body: "לבדוק תיק, הודעות וקבוצת הורים." },
+  { id: "school-clothes", category: "גן ובית ספר", title: "להכין בגדים לגן", body: "לבחור בגדים בערב כדי לצמצם החלטות בבוקר." },
+  { id: "school-message", category: "גן ובית ספר", title: "לשלוח הודעה לגננת או למורה", body: "לעדכן על איסוף, תרופה או חפץ חסר." },
+  { id: "school-payment", category: "גן ובית ספר", title: "לשלם לגן או לחוג", body: "לטפל בזה אם זה חוסם הרשמה או השתתפות." },
+  { id: "school-showtell", category: "גן ובית ספר", title: "להכין חפץ להצגה", body: "להכניס לתיק לפני שעת השינה." },
+  { id: "school-activity", category: "גן ובית ספר", title: "לארוז ציוד לחוג", body: "נעליים, בגד ים, מגבת, כלי נגינה או בגדי ספורט." },
+  { id: "health-appointment", category: "בריאות", title: "לקבוע תור לרופא", body: "להוסיף תסמינים, שעות נוחות ומספר תעודה אם צריך." },
+  { id: "health-medicine", category: "בריאות", title: "לתת תרופה בזמן", body: "להגדיר תזכורת ולכתוב מתי ניתנה המנה." },
+  { id: "health-vitamins", category: "בריאות", title: "לתת ויטמינים", body: "לחבר את זה לארוחת בוקר או לצחצוח שיניים." },
+  { id: "health-temperature", category: "בריאות", title: "למדוד חום", body: "לרשום שעה ותוצאה אם הילד/ה חולים." },
+  { id: "health-insurance", category: "בריאות", title: "להעלות מסמך לקופה", body: "לצלם ולשמור לפני שזה נשכח." },
+  { id: "health-dentist", category: "בריאות", title: "לקבוע בדיקת שיניים", body: "לבחור תור בוקר אם זה קל יותר לילד/ה." },
+  { id: "sleep-pajamas", category: "שינה", title: "להכין פיג׳מה וחיתול", body: "להניח באמבטיה לפני שמתחילים את הערב." },
+  { id: "sleep-story", category: "שינה", title: "לבחור סיפור לשינה", body: "להציע שני ספרים, לא את כל המדף." },
+  { id: "sleep-room", category: "שינה", title: "להכין חדר לשינה", body: "אור עמום, מים, חפץ מעבר ורעש לבן אם משתמשים." },
+  { id: "sleep-routine", category: "שינה", title: "להתחיל שגרה מוקדם", body: "להתחיל עשר דקות לפני נקודת החיכוך הרגילה." },
+  { id: "sleep-wakeup", category: "שינה", title: "להכין את הבוקר", body: "בגדים, תיק ורעיון לארוחת בוקר מוכנים מהערב." },
+  { id: "admin-bills", category: "סידורי הורים", title: "לשלם חשבון", body: "לטפל בחשבון אחד בלבד ואז לעצור." },
+  { id: "admin-calendar", category: "סידורי הורים", title: "לעדכן יומן משפחתי", body: "להוסיף תורים, שינויי איסוף, ימי הולדת וחוגים." },
+  { id: "admin-babysitter", category: "סידורי הורים", title: "לאשר בייביסיטר", body: "לשלוח שעה, כתובת, הערות אוכל ושגרת שינה." },
+  { id: "admin-call", category: "סידורי הורים", title: "לחזור לשיחה חשובה", body: "רופא, גן, ביטוח, משלוח או לוגיסטיקה משפחתית." },
+  { id: "admin-budget", category: "סידורי הורים", title: "לבדוק הוצאות שבועיות", body: "קניות, פארם, גן, חוגים והוצאות קטנות." },
+  { id: "admin-parent-rest", category: "סידורי הורים", title: "לתכנן הפסקה להורה", body: "עשר דקות לבד, מקלחת, הליכה או קפה שקט נחשבים." }
 ];
+
+function normalizeState(rawState) {
+  const nextState = { ...structuredClone(defaultState), ...rawState };
+  const legacyRoutineMap = {
+    "School pickup": "איסוף מהגן",
+    "Morning routine": "שגרת בוקר",
+    "Bedtime": "שעת שינה",
+    "Weekend planning": "תכנון סוף שבוע"
+  };
+  const legacyNeedsMap = {
+    Transitions: "מעברים",
+    Bedtime: "שעת שינה",
+    Meals: "אוכל",
+    "Emotional regulation": "ויסות רגשי",
+    "School prep": "התארגנות לגן",
+    "Parent energy": "אנרגיה של ההורה",
+    "Sibling conflict": "ריבים בין אחים",
+    "Screen time": "מסכים"
+  };
+
+  nextState.parentName = nextState.parentName === "Noa" ? "נועה" : nextState.parentName;
+  nextState.childName = nextState.childName === "Maya" ? "מאיה" : nextState.childName;
+  nextState.routine = legacyRoutineMap[nextState.routine] || nextState.routine || defaultState.routine;
+  nextState.needs = (nextState.needs || defaultState.needs).map((need) => legacyNeedsMap[need] || need);
+  if (!Array.isArray(nextState.messages) || nextState.messages.some((message) => /[A-Za-z]/.test(message.text))) {
+    nextState.messages = structuredClone(defaultState.messages);
+  }
+  return nextState;
+}
 
 function loadState() {
   const saved = localStorage.getItem("dotti-demo-state");
@@ -153,7 +182,7 @@ function loadState() {
   }
 
   try {
-    return { ...structuredClone(defaultState), ...JSON.parse(saved) };
+    return normalizeState(JSON.parse(saved));
   } catch {
     return structuredClone(defaultState);
   }
@@ -188,51 +217,51 @@ function setView(viewName) {
   });
 
   const titles = {
-    home: `Good morning, ${state.parentName}`,
-    tasks: "Everyday tasks",
-    reflect: "Tell Dotti what feels heavy",
-    plan: `${state.childName}'s guided plan`,
-    assistant: "Dotti assistant",
-    profile: "Family setup"
+    home: `בוקר טוב, ${state.parentName}`,
+    tasks: "משימות יומיומיות",
+    reflect: "ספרו ל־Dotti מה מכביד",
+    plan: `התוכנית של ${state.childName}`,
+    assistant: "העוזרת של Dotti",
+    profile: "הגדרות משפחה"
   };
   screenTitle.textContent = titles[viewName] || "Dotti";
 }
 
 function getPlan() {
-  const basePlan = routineTemplates[state.routine] || routineTemplates["School pickup"];
+  const basePlan = routineTemplates[state.routine] || routineTemplates["איסוף מהגן"];
   const pressureTask = state.stress >= 8
-    ? ["Now", "Reduce the ask", "Pick one thing to solve first and postpone the rest."]
-    : ["Now", "Prepare the next step", "Set up the smallest useful action before the rush."];
+    ? ["עכשיו", "להקטין את הדרישה", "לבחור דבר אחד לפתור עכשיו ולדחות את השאר."]
+    : ["עכשיו", "להכין את הצעד הבא", "להגדיר פעולה קטנה וברורה לפני שהעומס מתחיל."];
   return [pressureTask, ...basePlan].slice(0, 5);
 }
 
 function getRecommendation() {
-  const needText = state.needs.length ? state.needs.join(", ") : "one clear need";
+  const needText = state.needs.length ? state.needs.join(", ") : "צורך אחד ברור";
   if (state.stress >= 8) {
-    return `Pressure is high. Dotti will focus on ${needText}, shorter steps, and fewer decisions.`;
+    return `רמת העומס גבוהה. Dotti תתמקד ב־${needText}, בצעדים קצרים ובפחות החלטות.`;
   }
   if (state.stress <= 3) {
-    return `Today looks steadier. Dotti will keep ${needText} supported while leaving more room for flexibility.`;
+    return `היום נראה יציב יותר. Dotti תשמור על תמיכה ב־${needText} ותשאיר יותר מקום לגמישות.`;
   }
-  return `Dotti will shape the day around ${needText}, with one practical step before each difficult transition.`;
+  return `Dotti תבנה את היום סביב ${needText}, עם פעולה מעשית אחת לפני כל מעבר מאתגר.`;
 }
 
 function render() {
-  const today = new Intl.DateTimeFormat("en", { weekday: "long", month: "short", day: "numeric" }).format(new Date());
+  const today = new Intl.DateTimeFormat("he-IL", { weekday: "long", month: "long", day: "numeric" }).format(new Date());
   const score = Math.max(18, 100 - state.stress * 7 + state.completedTasks.length * 3);
   const completedDailyCount = (state.completedDailyTasks || []).length;
   const plan = getPlan();
 
   todayLabel.textContent = today;
-  homeHeadline.textContent = `You have ${plan.length} guided steps and ${dailyTasks.length} everyday tasks ready.`;
-  homeSummary.textContent = `Dotti is focusing on ${state.needs.join(", ").toLowerCase()} for ${state.childName}, with ${completedDailyCount} daily tasks completed.`;
+  homeHeadline.textContent = `יש לך ${plan.length} צעדים מונחים ו־${dailyTasks.length} משימות יומיומיות מוכנות.`;
+  homeSummary.textContent = `Dotti מתמקדת ב־${state.needs.join(", ")} עבור ${state.childName}, עם ${completedDailyCount} משימות שסומנו כבוצעו.`;
   calmScore.textContent = score;
   nextAction.textContent = plan[0][2];
   stressRange.value = state.stress;
   stressValue.textContent = state.stress;
   reflectionNote.value = state.note || "";
   recommendationText.textContent = getRecommendation();
-  needsCount.textContent = `${state.needs.length} active`;
+  needsCount.textContent = `${state.needs.length} פעילים`;
 
   renderNeeds();
   renderTimeline(plan);
@@ -280,7 +309,7 @@ function renderPlan(plan) {
     const card = document.createElement("article");
     card.className = `task-card${done ? " is-done" : ""}`;
     card.innerHTML = `
-        <button type="button" aria-label="Toggle task ${index + 1}" data-task="${index}">${done ? "Done" : ""}</button>
+      <button type="button" aria-label="סימון משימה ${index + 1}" data-task="${index}">${done ? "בוצע" : ""}</button>
       <div>
         <span class="timeline-time">${time}</span>
         <strong>${title}</strong>
@@ -296,9 +325,9 @@ function renderDailyTasks() {
     return;
   }
 
-  const selectedCategory = taskCategory.value || "All";
+  const selectedCategory = taskCategory.value || "הכל";
   const completed = state.completedDailyTasks || [];
-  const visibleTasks = selectedCategory === "All"
+  const visibleTasks = selectedCategory === "הכל"
     ? dailyTasks
     : dailyTasks.filter((task) => task.category === selectedCategory);
 
@@ -308,7 +337,7 @@ function renderDailyTasks() {
     const card = document.createElement("article");
     card.className = `daily-task-card${done ? " is-done" : ""}`;
     card.innerHTML = `
-      <button type="button" data-daily-task="${task.id}" aria-label="Toggle ${task.title}">${done ? "Done" : ""}</button>
+      <button type="button" data-daily-task="${task.id}" aria-label="סימון ${task.title}">${done ? "בוצע" : ""}</button>
       <div>
         <span>${task.category}</span>
         <strong>${task.title}</strong>
@@ -339,16 +368,19 @@ function renderProfile() {
 
 function getDottiReply(message) {
   const lower = message.toLowerCase();
-  if (lower.includes("bedtime")) {
-    return `For bedtime, keep the script tiny: "First pajamas, then story, then sleep." If ${state.childName} pushes back, repeat the same sentence with warmth.`;
+  if (lower.includes("שינה") || lower.includes("לישון")) {
+    return `בשעת שינה כדאי לשמור על משפט קצר וקבוע: "קודם פיג׳מה, אחר כך סיפור, ואז לילה טוב." אם ${state.childName} מתנגדת, חוזרים על אותו משפט ברוגע.`;
   }
-  if (lower.includes("pickup") || lower.includes("transition")) {
-    return `For pickup, reduce surprises. Bring a snack, name the next stop, and offer two choices that both work for you.`;
+  if (lower.includes("איסוף") || lower.includes("מעבר")) {
+    return "במעבר אחרי איסוף כדאי להפחית הפתעות: נשנוש קטן, משפט שמסביר מה קורה עכשיו, ושתי אפשרויות ששתיהן מקובלות עליך.";
   }
-  if (lower.includes("overwhelmed") || lower.includes("stress")) {
-    return "One tiny next step: lower the room pressure before solving the problem. Sit, breathe once, and choose only the next useful action.";
+  if (lower.includes("עומס") || lower.includes("לחוץ") || lower.includes("קשה")) {
+    return "צעד אחד קטן: קודם מורידים את הלחץ בחדר לפני שמנסים לפתור הכול. לשבת, לנשום פעם אחת, ולבחור רק את הפעולה הבאה.";
   }
-  return `I would start with ${state.needs[0] || "the smallest need"}. Make it visible, make it short, and give ${state.childName} one choice inside your boundary.`;
+  if (lower.includes("מכולת") || lower.includes("חיתולים") || lower.includes("קניות")) {
+    return "לקניות, כדאי לפתוח את מסך המשימות ולסמן רק שלושה דברים דחופים: חיתולים, מגבונים ומשהו פשוט לארוחת ערב.";
+  }
+  return `הייתי מתחילה מ־${state.needs[0] || "הצורך הכי קטן"}. להפוך אותו לגלוי, קצר ובר ביצוע, ולתת ל־${state.childName} בחירה אחת בתוך הגבול שלך.`;
 }
 
 loginForm.addEventListener("submit", (event) => {
@@ -363,7 +395,7 @@ loginForm.addEventListener("submit", (event) => {
     return;
   }
 
-  loginError.textContent = "Username or password is incorrect.";
+  loginError.textContent = "שם המשתמש או הסיסמה אינם נכונים.";
 });
 
 document.addEventListener("click", (event) => {
@@ -424,7 +456,7 @@ generatePlan.addEventListener("click", () => {
   state.completedTasks = [];
   state.messages.push({
     role: "dotti",
-    text: `I rebuilt the plan around ${state.needs.join(", ").toLowerCase()} and pressure level ${state.stress}.`
+    text: `בניתי מחדש את התוכנית סביב ${state.needs.join(", ")} וברמת עומס ${state.stress}.`
   });
   saveState();
   render();
@@ -462,10 +494,10 @@ chatForm.addEventListener("submit", (event) => {
 profileForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(profileForm);
-  state.parentName = String(formData.get("parentName") || "Noa").trim() || "Noa";
-  state.childName = String(formData.get("childName") || "Maya").trim() || "Maya";
+  state.parentName = String(formData.get("parentName") || "נועה").trim() || "נועה";
+  state.childName = String(formData.get("childName") || "מאיה").trim() || "מאיה";
   state.childAge = String(formData.get("childAge") || "5").trim() || "5";
-  state.routine = String(formData.get("routine") || "School pickup");
+  state.routine = String(formData.get("routine") || "איסוף מהגן");
   state.completedTasks = [];
   saveState();
   render();

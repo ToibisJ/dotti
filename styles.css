@@ -22,7 +22,8 @@ body {
   min-height: 100vh;
   background: var(--paper);
   color: var(--ink);
-  font-family: Inter, Arial, sans-serif;
+  direction: rtl;
+  font-family: Assistant, Arial, sans-serif;
 }
 
 button,
@@ -208,7 +209,7 @@ input[type="range"] {
   flex-direction: column;
   gap: 22px;
   padding: 22px;
-  border-right: 1px solid var(--line);
+  border-left: 1px solid var(--line);
   background: #fbfcf8;
 }
 
@@ -243,7 +244,7 @@ input[type="range"] {
   background: transparent;
   color: var(--muted);
   font-weight: 900;
-  text-align: left;
+  text-align: right;
 }
 
 .nav-item.is-active {
@@ -438,7 +439,7 @@ input[type="range"] {
 .choice-grid input {
   width: auto;
   min-height: auto;
-  margin-right: 8px;
+  margin-left: 8px;
 }
 
 .section-title {
@@ -461,7 +462,7 @@ input[type="range"] {
 }
 
 .range-row span:last-child {
-  text-align: right;
+  text-align: left;
 }
 
 .range-row strong {
