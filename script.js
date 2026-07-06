@@ -69,18 +69,18 @@ const routineTemplates = {
   "School pickup": [
     ["14:45", "Before pickup", "Prepare snack, water, and one low-pressure greeting."],
     ["15:20", "Transition home", "Offer two choices: quiet time or music in the car."],
-    ["16:00", "Reset moment", "Ten minutes of decompression before requests."],
+    ["16:00", "Quiet pause", "Ten minutes of decompression before requests."],
     ["19:15", "Bedtime bridge", "Use one repeated sentence and keep the room calm."]
   ],
   "Morning routine": [
     ["06:55", "Wake softly", "Start with light, water, and one simple sentence."],
     ["07:15", "Two-step getting dressed", "Put clothes in order and avoid extra options."],
     ["07:45", "Exit cue", "Use the same final phrase every morning."],
-    ["08:05", "After drop-off", "Take one minute to reset your own nervous system."]
+    ["08:05", "After drop-off", "Take one minute to breathe before the next task."]
   ],
   "Bedtime": [
     ["18:20", "Dinner landing", "Reduce decisions and name the next two steps."],
-    ["18:50", "Body reset", "Warm bath, dim light, or five slow breaths."],
+    ["18:50", "Body calm", "Warm bath, dim light, or five slow breaths."],
     ["19:10", "Room routine", "Story, water, toilet, one goodnight phrase."],
     ["19:25", "Boundary repeat", "Repeat the same kind sentence without negotiation."]
   ],
@@ -118,7 +118,7 @@ const dailyTasks = [
   { id: "home-fold", category: "Home", title: "Fold clean clothes", body: "Focus only on child clothes if time is short." },
   { id: "home-dishes", category: "Home", title: "Run dishwasher", body: "Clear bottles, lunchboxes, and dinner dishes first." },
   { id: "home-trash", category: "Home", title: "Take out trash", body: "Include diaper bin or bathroom trash if needed." },
-  { id: "home-toys", category: "Home", title: "Reset toy area", body: "Use one basket reset, not a full cleanup." },
+  { id: "home-toys", category: "Home", title: "Tidy toy area", body: "Use one basket tidy, not a full cleanup." },
   { id: "home-bag", category: "Home", title: "Prepare tomorrow's bag", body: "Clothes, water, forms, lunchbox, and comfort item." },
   { id: "home-car", category: "Home", title: "Clean car seat area", body: "Remove crumbs, old snacks, wet wipes, and trash." },
   { id: "school-form", category: "School", title: "Sign school form", body: "Check bag, messages, and parent group reminders." },
@@ -143,7 +143,7 @@ const dailyTasks = [
   { id: "admin-babysitter", category: "Parent admin", title: "Confirm babysitter", body: "Send time, address, food notes, and bedtime routine." },
   { id: "admin-call", category: "Parent admin", title: "Return important call", body: "Doctor, school, insurance, delivery, or family logistics." },
   { id: "admin-budget", category: "Parent admin", title: "Check weekly spending", body: "Look at groceries, pharmacy, school, and activities." },
-  { id: "admin-parent-rest", category: "Parent admin", title: "Plan one parent reset", body: "Ten minutes alone, shower, walk, or quiet coffee counts." }
+  { id: "admin-parent-rest", category: "Parent admin", title: "Plan one parent break", body: "Ten minutes alone, shower, walk, or quiet coffee counts." }
 ];
 
 function loadState() {
@@ -174,7 +174,8 @@ function lock() {
   sessionStorage.removeItem("dotti-preview-authenticated");
   appView.classList.add("is-hidden");
   loginView.classList.remove("is-hidden");
-  loginForm.reset();
+  loginForm.elements.username.value = "";
+  loginForm.elements.password.value = "";
 }
 
 function setView(viewName) {
