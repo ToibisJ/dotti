@@ -28,7 +28,6 @@ const appView = document.querySelector("#appView");
 const loginForm = document.querySelector("#loginForm");
 const loginError = document.querySelector("#loginError");
 const lockButton = document.querySelector("#lockButton");
-const resetButton = document.querySelector("#resetButton");
 const screenTitle = document.querySelector("#screenTitle");
 const todayLabel = document.querySelector("#todayLabel");
 const homeHeadline = document.querySelector("#homeHeadline");
@@ -189,6 +188,7 @@ function setView(viewName) {
 
   const titles = {
     home: `Good morning, ${state.parentName}`,
+    tasks: "Everyday tasks",
     reflect: "Tell Dotti what feels heavy",
     plan: `${state.childName}'s guided plan`,
     assistant: "Dotti assistant",
@@ -462,13 +462,6 @@ profileForm.addEventListener("submit", (event) => {
   state.childAge = String(formData.get("childAge") || "5").trim() || "5";
   state.routine = String(formData.get("routine") || "School pickup");
   state.completedTasks = [];
-  saveState();
-  render();
-  setView("home");
-});
-
-resetButton.addEventListener("click", () => {
-  state = structuredClone(defaultState);
   saveState();
   render();
   setView("home");

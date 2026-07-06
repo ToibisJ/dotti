@@ -37,6 +37,7 @@
           </a>
           <nav class="side-nav">
             <button class="nav-item is-active" type="button" data-view-link="home">Home</button>
+            <button class="nav-item" type="button" data-view-link="tasks">Tasks</button>
             <button class="nav-item" type="button" data-view-link="reflect">Reflect</button>
             <button class="nav-item" type="button" data-view-link="plan">Plan</button>
             <button class="nav-item" type="button" data-view-link="assistant">Assistant</button>
@@ -52,7 +53,6 @@
               <h2 id="screenTitle">Good morning, Noa</h2>
             </div>
             <div class="header-actions">
-              <button class="button quiet" type="button" id="resetButton">Reset demo</button>
               <button class="button primary" type="button" data-view-link="assistant">Ask Dotti</button>
             </div>
           </header>
@@ -64,7 +64,7 @@
                 <h3 id="homeHeadline">You have 4 guided steps for this afternoon.</h3>
                 <p id="homeSummary">Dotti noticed a busy school pickup window and prepared a softer plan with snack, transition, and bedtime support.</p>
                 <div class="hero-actions">
-                  <button class="button primary" type="button" data-view-link="plan">Open plan</button>
+                  <button class="button primary" type="button" data-view-link="tasks">Open tasks</button>
                   <button class="button secondary" type="button" data-view-link="reflect">Check in</button>
                 </div>
               </div>
@@ -142,10 +142,13 @@
               </div>
               <button class="button primary" type="button" id="generatePlan">Generate plan</button>
             </div>
-            <div class="daily-task-section">
+          </section>
+
+          <section class="view" id="tasksView" data-view="tasks">
+            <div class="daily-task-section is-featured">
               <div class="section-title compact">
-                <p class="eyebrow">Everyday task bank</p>
-                <h3>Real things parents need to remember</h3>
+                <p class="eyebrow">Tasks</p>
+                <h3>Everyday parent checklist</h3>
               </div>
               <div class="task-filter panel">
                 <label for="taskCategory">Show category</label>
@@ -219,9 +222,9 @@
 
         <nav class="mobile-nav" aria-label="Mobile navigation">
           <button class="nav-item is-active" type="button" data-view-link="home">Home</button>
+          <button class="nav-item" type="button" data-view-link="tasks">Tasks</button>
           <button class="nav-item" type="button" data-view-link="reflect">Reflect</button>
           <button class="nav-item" type="button" data-view-link="plan">Plan</button>
-          <button class="nav-item" type="button" data-view-link="assistant">Ask</button>
         </nav>
       </section>
     </main>

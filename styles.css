@@ -523,6 +523,10 @@ input[type="range"] {
   margin-top: 28px;
 }
 
+.daily-task-section.is-featured {
+  margin-top: 0;
+}
+
 .section-title.compact h3 {
   max-width: 860px;
   font-size: clamp(1.8rem, 3.5vw, 3.4rem);
