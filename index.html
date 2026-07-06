@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260706-3">
   </head>
   <body>
     <main>
@@ -134,7 +134,32 @@
               <p class="eyebrow">Assisted day</p>
               <h3>Step-by-step plan</h3>
             </div>
-            <div class="plan-board" id="planBoard"></div>
+            <div class="plan-board" id="planBoard">
+              <article class="task-card">
+                <button type="button" aria-label="Toggle prepare snack"></button>
+                <div>
+                  <span class="timeline-time">Now</span>
+                  <strong>Pack snack and water</strong>
+                  <p>Prepare a small snack and water bottle before pickup.</p>
+                </div>
+              </article>
+              <article class="task-card">
+                <button type="button" aria-label="Toggle transition plan"></button>
+                <div>
+                  <span class="timeline-time">15:20</span>
+                  <strong>Transition home</strong>
+                  <p>Offer two choices: quiet time or music in the car.</p>
+                </div>
+              </article>
+              <article class="task-card">
+                <button type="button" aria-label="Toggle reset moment"></button>
+                <div>
+                  <span class="timeline-time">16:00</span>
+                  <strong>Reset moment</strong>
+                  <p>Ten minutes of decompression before requests.</p>
+                </div>
+              </article>
+            </div>
             <div class="panel plan-tools">
               <div>
                 <h3>Generate a softer evening</h3>
@@ -165,7 +190,56 @@
                 </select>
                 <button class="button quiet" type="button" id="clearDailyTasks">Clear completed</button>
               </div>
-              <div class="daily-task-grid" id="dailyTaskList"></div>
+              <div class="daily-task-grid" id="dailyTaskList">
+                <article class="daily-task-card">
+                  <button type="button" aria-label="Toggle buy diapers"></button>
+                  <div>
+                    <span>Shopping</span>
+                    <strong>Buy diapers</strong>
+                    <p>Check size before leaving and buy a backup pack if you are low.</p>
+                  </div>
+                </article>
+                <article class="daily-task-card">
+                  <button type="button" aria-label="Toggle grocery store"></button>
+                  <div>
+                    <span>Shopping</span>
+                    <strong>Go to the grocery store</strong>
+                    <p>Bread, eggs, fruit, yogurt, vegetables, and one easy dinner option.</p>
+                  </div>
+                </article>
+                <article class="daily-task-card">
+                  <button type="button" aria-label="Toggle wet wipes"></button>
+                  <div>
+                    <span>Shopping</span>
+                    <strong>Buy wet wipes</strong>
+                    <p>Add one pack for home and one small pack for the bag.</p>
+                  </div>
+                </article>
+                <article class="daily-task-card">
+                  <button type="button" aria-label="Toggle lunchbox"></button>
+                  <div>
+                    <span>Food</span>
+                    <strong>Pack lunchbox</strong>
+                    <p>Main item, fruit, snack, water, and napkin.</p>
+                  </div>
+                </article>
+                <article class="daily-task-card">
+                  <button type="button" aria-label="Toggle laundry"></button>
+                  <div>
+                    <span>Home</span>
+                    <strong>Do kids' laundry</strong>
+                    <p>Start one small load: pajamas, socks, school clothes.</p>
+                  </div>
+                </article>
+                <article class="daily-task-card">
+                  <button type="button" aria-label="Toggle doctor appointment"></button>
+                  <div>
+                    <span>Health</span>
+                    <strong>Book doctor appointment</strong>
+                    <p>Add symptoms, preferred hours, and child ID if needed.</p>
+                  </div>
+                </article>
+              </div>
             </div>
           </section>
 
@@ -175,7 +249,9 @@
               <h3>Ask for practical support</h3>
             </div>
             <div class="chat-panel">
-              <div class="chat-log" id="chatLog" aria-live="polite"></div>
+              <div class="chat-log" id="chatLog" aria-live="polite">
+                <div class="message dotti">Hi Noa. I am here with a calm plan, not a perfect plan. What feels heaviest today?</div>
+              </div>
               <form class="chat-form" id="chatForm">
                 <input id="chatInput" name="message" placeholder="Ask about bedtime, transitions, meals, or stress..." autocomplete="off">
                 <button class="button primary" type="submit">Send</button>
@@ -228,6 +304,6 @@
         </nav>
       </section>
     </main>
-    <script src="script.js"></script>
+    <script src="script.js?v=20260706-3"></script>
   </body>
 </html>

@@ -291,6 +291,10 @@ function renderPlan(plan) {
 }
 
 function renderDailyTasks() {
+  if (!taskCategory || !dailyTaskList) {
+    return;
+  }
+
   const selectedCategory = taskCategory.value || "All";
   const completed = state.completedDailyTasks || [];
   const visibleTasks = selectedCategory === "All"
@@ -425,9 +429,9 @@ generatePlan.addEventListener("click", () => {
   render();
 });
 
-taskCategory.addEventListener("change", renderDailyTasks);
+taskCategory?.addEventListener("change", renderDailyTasks);
 
-clearDailyTasks.addEventListener("click", () => {
+clearDailyTasks?.addEventListener("click", () => {
   state.completedDailyTasks = [];
   saveState();
   render();
