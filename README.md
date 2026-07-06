@@ -1,18 +1,18 @@
 # Dotti App Demo
 
-אפליקציית דמו אינטראקטיבית בעברית עבור Dotti: עוזרת להורים לנהל משימות יומיומיות, תכנון יום, צ׳ק אין רגשי וצ׳אט תמיכה.
+Interactive English prototype for the Dotti parenting assistant concept.
 
-## תצוגה מקומית
+## Local preview
 
-אפשר לפתוח את `index.html` בדפדפן, או להריץ שרת סטטי:
+Open `index.html` in a browser, or run a static server:
 
 ```powershell
 npx http-server . -p 4173
 ```
 
-## פרטי כניסה
+## Demo login
 
-- שם משתמש: `dotti`
-- סיסמה: `dotti2026`
+- Username: `dotti`
+- Password: `dotti2026`
 
-שער הכניסה הוא בצד לקוח ומתאים לשיתוף קל ב־GitHub Pages, לא להגנה על מידע רגיש.
+The login gate is client-side and suitable for light sharing through GitHub Pages, not for protecting sensitive material.

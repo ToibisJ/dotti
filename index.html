@@ -1,309 +1,221 @@
 <!doctype html>
-<html lang="he" dir="rtl">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="אפליקציית דמו אינטראקטיבית של Dotti לניהול משימות ותמיכה בהורים.">
-    <title>Dotti | עוזרת הורים</title>
+    <meta name="description" content="Dotti interactive parenting assistant prototype.">
+    <title>Dotti | Parenting Assistant</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=20260706-he-1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=20260706-en-design-1">
   </head>
   <body>
     <main>
-      <section class="login-view" id="loginView" aria-labelledby="loginTitle">
-        <div class="login-art" aria-hidden="true">
-          <img src="assets/dotti-see-u-soon.png" alt="">
+      <section class="login-screen" id="loginView" aria-labelledby="loginTitle">
+        <div class="login-phone" aria-hidden="true">
+          <div class="phone-shell mini">
+            <div class="phone-notch"></div>
+            <div class="mini-hero">
+              <img src="assets/dotti-see-u-soon.png" alt="">
+              <p>Your clever<br>parenting sidekick.</p>
+            </div>
+          </div>
         </div>
-        <form class="login-panel" id="loginForm">
-          <p class="eyebrow">כניסה פרטית</p>
+        <form class="login-card" id="loginForm">
+          <p class="eyebrow">Private preview</p>
           <h1 id="loginTitle">Dotti</h1>
-          <p class="login-copy">אפליקציית דמו שעוזרת להורים לנהל יום עמוס בצורה רגועה וברורה.</p>
-          <label for="username">שם משתמש</label>
+          <p>A working prototype based on the Dotti UX/UI case study.</p>
+          <label for="username">Username</label>
           <input id="username" name="username" autocomplete="username" required>
-          <label for="password">סיסמה</label>
+          <label for="password">Password</label>
           <input id="password" name="password" type="password" autocomplete="current-password" required>
           <p class="error-message" id="loginError" role="alert"></p>
-          <button class="button primary" type="submit">כניסה לאפליקציה</button>
+          <button class="button primary" type="submit">Enter app</button>
         </form>
       </section>
 
-      <section class="app-shell is-hidden" id="appView">
-        <aside class="sidebar" aria-label="ניווט באפליקציה">
-          <a class="app-brand" href="#" data-view-link="home">
+      <section class="prototype is-hidden" id="appView">
+        <aside class="side-panel">
+          <a class="brand" href="#" data-view-link="home">
             <img src="assets/dotti-see-u-soon.png" alt="">
             <span>Dotti</span>
           </a>
-          <nav class="side-nav">
-            <button class="nav-item is-active" type="button" data-view-link="home">בית</button>
-            <button class="nav-item" type="button" data-view-link="tasks">משימות</button>
-            <button class="nav-item" type="button" data-view-link="reflect">צ׳ק אין</button>
-            <button class="nav-item" type="button" data-view-link="plan">תכנון</button>
-            <button class="nav-item" type="button" data-view-link="assistant">עוזרת</button>
-            <button class="nav-item" type="button" data-view-link="profile">פרופיל</button>
+          <nav class="side-nav" aria-label="Prototype sections">
+            <button class="nav-item is-active" type="button" data-view-link="home">Home</button>
+            <button class="nav-item" type="button" data-view-link="tasks">Tasks</button>
+            <button class="nav-item" type="button" data-view-link="reflect">Reflect</button>
+            <button class="nav-item" type="button" data-view-link="plan">Plan</button>
+            <button class="nav-item" type="button" data-view-link="assistant">Assistant</button>
+            <button class="nav-item" type="button" data-view-link="profile">Profile</button>
           </nav>
-          <button class="button quiet lock-button" id="lockButton" type="button">נעילת האפליקציה</button>
+          <button class="button quiet lock-button" id="lockButton" type="button">Lock app</button>
         </aside>
 
-        <section class="app-main">
-          <header class="app-header">
+        <section class="stage">
+          <header class="stage-header">
             <div>
-              <p class="eyebrow" id="todayLabel">היום</p>
-              <h2 id="screenTitle">בוקר טוב, נועה</h2>
+              <p class="eyebrow" id="todayLabel">Today</p>
+              <h2 id="screenTitle">Good morning, Noa</h2>
             </div>
-            <div class="header-actions">
-              <button class="button primary" type="button" data-view-link="assistant">שאלו את Dotti</button>
-            </div>
+            <button class="button primary" type="button" data-view-link="assistant">Ask Dotti</button>
           </header>
 
-          <section class="view is-active" id="homeView" data-view="home">
-            <div class="hero-card">
-              <div>
-                <p class="eyebrow">פתיחה רגועה ליום</p>
-                <h3 id="homeHeadline">יש לך צעדים מונחים ומשימות יומיומיות מוכנות.</h3>
-                <p id="homeSummary">Dotti זיהתה חלון עמוס סביב איסוף מהגן והכינה תוכנית עדינה עם אוכל, מעבר ושגרת ערב.</p>
-                <div class="hero-actions">
-                  <button class="button primary" type="button" data-view-link="tasks">פתח משימות</button>
-                  <button class="button secondary" type="button" data-view-link="reflect">צ׳ק אין</button>
-                </div>
+          <div class="phone-shell">
+            <div class="phone-notch"></div>
+            <section class="phone-screen view is-active" id="homeView" data-view="home">
+              <div class="home-hero">
+                <img src="assets/dotti-see-u-soon.png" alt="">
+                <p class="eyebrow">Your calm start</p>
+                <h3 id="homeHeadline">You have guided steps and everyday tasks ready.</h3>
+                <p id="homeSummary">Dotti prepared a softer pickup and evening flow.</p>
               </div>
-              <div class="pulse-panel">
-                <span id="calmScore">72</span>
-                <p>מדד רוגע</p>
+              <div class="score-row">
+                <div class="score-bubble">
+                  <strong id="calmScore">72</strong>
+                  <span>calm score</span>
+                </div>
+                <article>
+                  <span>Next best action</span>
+                  <p id="nextAction">Pack water and a small snack before pickup.</p>
+                  <button class="button secondary" type="button" id="completeNextAction">Mark done</button>
+                </article>
               </div>
-            </div>
-
-            <div class="dashboard-grid">
-              <article class="panel">
-                <div class="panel-head">
-                  <h3>הפעולה הבאה</h3>
-                  <span class="tag">עכשיו</span>
-                </div>
-                <p id="nextAction">להכין בקבוק מים ונשנוש קטן לפני היציאה.</p>
-                <button class="button secondary" type="button" id="completeNextAction">סמן כבוצע</button>
-              </article>
-              <article class="panel">
-                <div class="panel-head">
-                  <h3>קצב היום</h3>
-                  <span class="tag mint">פעיל</span>
-                </div>
-                <div class="timeline" id="timelineList"></div>
-              </article>
-              <article class="panel">
-                <div class="panel-head">
-                  <h3>מפת צרכים</h3>
-                  <span class="tag coral" id="needsCount">3 פעילים</span>
-                </div>
-                <div class="need-cloud" id="needCloud"></div>
-              </article>
-            </div>
-          </section>
-
-          <section class="view" id="reflectView" data-view="reflect">
-            <div class="section-title">
-              <p class="eyebrow">צ׳ק אין רגשי</p>
-              <h3>מה הכי מכביד כרגע?</h3>
-            </div>
-            <form class="reflection-panel" id="reflectionForm">
-              <label for="stressRange">רמת עומס נוכחית</label>
-              <input id="stressRange" name="stress" type="range" min="1" max="10" value="6">
-              <div class="range-row">
-                <span>רגוע</span>
-                <strong id="stressValue">6</strong>
-                <span>עמוס מאוד</span>
+              <div class="section-line">
+                <h4>Today's rhythm</h4>
+                <span class="status-pill">Live</span>
               </div>
+              <div class="timeline" id="timelineList"></div>
+            </section>
 
-              <fieldset>
-                <legend>בחרו במה Dotti צריכה לתמוך היום</legend>
-                <div class="choice-grid" id="needChoices"></div>
-              </fieldset>
-
-              <label for="reflectionNote">הערה קצרה</label>
-              <textarea id="reflectionNote" name="note" rows="4" placeholder="לדוגמה: האיסוף לחוץ ושעת השינה הייתה מתוחה."></textarea>
-              <button class="button primary" type="submit">עדכון Dotti</button>
-            </form>
-            <aside class="panel recommendation">
-              <h3>הקריאה של Dotti</h3>
-              <p id="recommendationText">בחרו מה מרגיש כבד היום, ו־Dotti תבנה סביב זה תוכנית מתאימה.</p>
-            </aside>
-          </section>
-
-          <section class="view" id="planView" data-view="plan">
-            <div class="section-title">
-              <p class="eyebrow">יום מונחה</p>
-              <h3>תוכנית צעד־אחר־צעד</h3>
-            </div>
-            <div class="plan-board" id="planBoard">
-              <article class="task-card">
-                <button type="button" aria-label="סימון הכנת נשנוש"></button>
-                <div>
-                  <span class="timeline-time">עכשיו</span>
-                  <strong>להכין נשנוש ומים</strong>
-                  <p>להכין נשנוש קטן ובקבוק מים לפני האיסוף.</p>
-                </div>
-              </article>
-              <article class="task-card">
-                <button type="button" aria-label="סימון מעבר הביתה"></button>
-                <div>
-                  <span class="timeline-time">15:20</span>
-                  <strong>מעבר הביתה</strong>
-                  <p>להציע שתי אפשרויות: זמן שקט או מוזיקה באוטו.</p>
-                </div>
-              </article>
-              <article class="task-card">
-                <button type="button" aria-label="סימון הפסקה שקטה"></button>
-                <div>
-                  <span class="timeline-time">16:00</span>
-                  <strong>הפסקה שקטה</strong>
-                  <p>עשר דקות של הורדת עומס לפני בקשות ומשימות.</p>
-                </div>
-              </article>
-            </div>
-            <div class="panel plan-tools">
-              <div>
-                <h3>לבנות ערב רגוע יותר</h3>
-                <p>Dotti יכולה לבנות מחדש את התוכנית לפי הצרכים ורמת העומס שבחרת.</p>
+            <section class="phone-screen view" id="tasksView" data-view="tasks">
+              <div class="screen-title">
+                <p class="eyebrow">Tasks</p>
+                <h3>Everyday parent checklist</h3>
               </div>
-              <button class="button primary" type="button" id="generatePlan">יצירת תוכנית</button>
-            </div>
-          </section>
-
-          <section class="view" id="tasksView" data-view="tasks">
-            <div class="daily-task-section is-featured">
-              <div class="section-title compact">
-                <p class="eyebrow">משימות</p>
-                <h3>צ׳ק ליסט יומי להורים</h3>
-              </div>
-              <div class="task-filter panel">
-                <label for="taskCategory">הצגת קטגוריה</label>
+              <div class="filter-bar">
+                <label for="taskCategory">Category</label>
                 <select id="taskCategory">
-                  <option value="הכל">כל המשימות</option>
-                  <option value="קניות">קניות</option>
-                  <option value="טיפול בילד">טיפול בילד</option>
-                  <option value="אוכל">אוכל</option>
-                  <option value="בית">בית</option>
-                  <option value="גן ובית ספר">גן ובית ספר</option>
-                  <option value="בריאות">בריאות</option>
-                  <option value="שינה">שינה</option>
-                  <option value="סידורי הורים">סידורי הורים</option>
+                  <option value="All">All tasks</option>
+                  <option value="Shopping">Shopping</option>
+                  <option value="Baby care">Baby care</option>
+                  <option value="Food">Food</option>
+                  <option value="Home">Home</option>
+                  <option value="School">School</option>
+                  <option value="Health">Health</option>
+                  <option value="Sleep">Sleep</option>
+                  <option value="Parent admin">Parent admin</option>
                 </select>
-                <button class="button quiet" type="button" id="clearDailyTasks">ניקוי סימונים</button>
+                <button class="button quiet" type="button" id="clearDailyTasks">Clear completed</button>
               </div>
-              <div class="daily-task-grid" id="dailyTaskList">
+              <div class="task-list" id="dailyTaskList">
                 <article class="daily-task-card">
-                  <button type="button" aria-label="סימון קניית חיתולים"></button>
-                  <div>
-                    <span>קניות</span>
-                    <strong>לקנות חיתולים</strong>
-                    <p>לבדוק מידה לפני שיוצאים ולקנות חבילת גיבוי אם נשאר מעט.</p>
-                  </div>
+                  <button type="button" aria-label="Toggle buy diapers"></button>
+                  <div><span>Shopping</span><strong>Buy diapers</strong><p>Check size and buy a backup pack if you are low.</p></div>
                 </article>
                 <article class="daily-task-card">
-                  <button type="button" aria-label="סימון הליכה למכולת"></button>
-                  <div>
-                    <span>קניות</span>
-                    <strong>ללכת למכולת</strong>
-                    <p>לחם, ביצים, פירות, יוגורט, ירקות ואפשרות פשוטה לארוחת ערב.</p>
-                  </div>
-                </article>
-                <article class="daily-task-card">
-                  <button type="button" aria-label="סימון קניית מגבונים"></button>
-                  <div>
-                    <span>קניות</span>
-                    <strong>לקנות מגבונים</strong>
-                    <p>חבילה אחת לבית וחבילה קטנה לתיק.</p>
-                  </div>
-                </article>
-                <article class="daily-task-card">
-                  <button type="button" aria-label="סימון הכנת קופסת אוכל"></button>
-                  <div>
-                    <span>אוכל</span>
-                    <strong>להכין קופסת אוכל</strong>
-                    <p>מנה עיקרית, פרי, נשנוש, מים ומפית.</p>
-                  </div>
-                </article>
-                <article class="daily-task-card">
-                  <button type="button" aria-label="סימון כביסה לילדים"></button>
-                  <div>
-                    <span>בית</span>
-                    <strong>לעשות כביסה לילדים</strong>
-                    <p>להפעיל מכונה קטנה: פיג׳מות, גרביים ובגדי גן.</p>
-                  </div>
-                </article>
-                <article class="daily-task-card">
-                  <button type="button" aria-label="סימון קביעת תור לרופא"></button>
-                  <div>
-                    <span>בריאות</span>
-                    <strong>לקבוע תור לרופא</strong>
-                    <p>להוסיף תסמינים, שעות נוחות ומספר תעודה אם צריך.</p>
-                  </div>
+                  <button type="button" aria-label="Toggle groceries"></button>
+                  <div><span>Shopping</span><strong>Go to the grocery store</strong><p>Bread, eggs, fruit, yogurt, vegetables, and an easy dinner option.</p></div>
                 </article>
               </div>
-            </div>
-          </section>
+            </section>
 
-          <section class="view" id="assistantView" data-view="assistant">
-            <div class="section-title">
-              <p class="eyebrow">העוזרת של Dotti</p>
-              <h3>בקשת עזרה מעשית</h3>
-            </div>
-            <div class="chat-panel">
+            <section class="phone-screen view" id="reflectView" data-view="reflect">
+              <div class="screen-title">
+                <p class="eyebrow">Needs reflection</p>
+                <h3>What feels hardest right now?</h3>
+              </div>
+              <form class="reflection-form" id="reflectionForm">
+                <label for="stressRange">Current pressure</label>
+                <input id="stressRange" name="stress" type="range" min="1" max="10" value="6">
+                <div class="range-row"><span>Steady</span><strong id="stressValue">6</strong><span>Overloaded</span></div>
+                <fieldset>
+                  <legend>Choose what Dotti should support today</legend>
+                  <div class="choice-grid" id="needChoices"></div>
+                </fieldset>
+                <label for="reflectionNote">Short note</label>
+                <textarea id="reflectionNote" name="note" rows="4" placeholder="Example: Pickup is rushed and bedtime has been tense."></textarea>
+                <button class="button primary" type="submit">Update Dotti</button>
+              </form>
+              <article class="recommendation">
+                <h4>Dotti's read</h4>
+                <p id="recommendationText">Choose what feels heavy today and Dotti will shape the next plan around it.</p>
+              </article>
+            </section>
+
+            <section class="phone-screen view" id="planView" data-view="plan">
+              <div class="screen-title">
+                <p class="eyebrow">Assisted day</p>
+                <h3>Step-by-step plan</h3>
+              </div>
+              <div class="plan-list" id="planBoard"></div>
+              <article class="generate-card">
+                <div>
+                  <h4>Generate a softer evening</h4>
+                  <p>Dotti rebuilds the plan from your active needs and pressure level.</p>
+                </div>
+                <button class="button primary" type="button" id="generatePlan">Generate plan</button>
+              </article>
+            </section>
+
+            <section class="phone-screen view" id="assistantView" data-view="assistant">
+              <div class="screen-title">
+                <p class="eyebrow">Dotti assistant</p>
+                <h3>Ask for practical support</h3>
+              </div>
               <div class="chat-log" id="chatLog" aria-live="polite">
-                <div class="message dotti">היי נועה. אני כאן כדי לבנות תוכנית רגועה, לא מושלמת. מה הכי מכביד היום?</div>
+                <div class="message dotti">Hi Noa. I am here with a calm plan, not a perfect plan. What feels heaviest today?</div>
               </div>
               <form class="chat-form" id="chatForm">
-                <input id="chatInput" name="message" placeholder="שאלו על שינה, מעברים, אוכל, משימות או עומס..." autocomplete="off">
-                <button class="button primary" type="submit">שליחה</button>
+                <input id="chatInput" name="message" placeholder="Ask about bedtime, groceries, transitions..." autocomplete="off">
+                <button class="button primary" type="submit">Send</button>
               </form>
-            </div>
-            <div class="quick-prompts">
-              <button type="button" data-prompt="שעת השינה הופכת למאבק. מה כדאי לנסות?">עזרה בשינה</button>
-              <button type="button" data-prompt="יש לנו מעבר קשה אחרי האיסוף. תני לי תוכנית.">מעבר אחרי איסוף</button>
-              <button type="button" data-prompt="אני מרגיש עומס. תני לי צעד אחד קטן.">צעד קטן</button>
-            </div>
-          </section>
+              <div class="quick-prompts">
+                <button type="button" data-prompt="Bedtime is becoming a fight. What should I try?">Bedtime help</button>
+                <button type="button" data-prompt="We need diapers and groceries. Help me prioritize.">Shopping help</button>
+                <button type="button" data-prompt="I feel overwhelmed. Give me one tiny next step.">Tiny step</button>
+              </div>
+            </section>
 
-          <section class="view" id="profileView" data-view="profile">
-            <div class="section-title">
-              <p class="eyebrow">הגדרות משפחה</p>
-              <h3>התאמה אישית</h3>
-            </div>
-            <form class="profile-grid" id="profileForm">
-              <label>
-                שם ההורה
-                <input name="parentName" value="נועה">
-              </label>
-              <label>
-                שם הילד/ה
-                <input name="childName" value="מאיה">
-              </label>
-              <label>
-                גיל הילד/ה
-                <input name="childAge" value="5">
-              </label>
-              <label>
-                שגרה מרכזית
-                <select name="routine">
-                  <option>איסוף מהגן</option>
-                  <option>שגרת בוקר</option>
-                  <option>שעת שינה</option>
-                  <option>תכנון סוף שבוע</option>
-                </select>
-              </label>
-              <button class="button primary" type="submit">שמירת פרופיל</button>
-            </form>
-          </section>
+            <section class="phone-screen view" id="profileView" data-view="profile">
+              <div class="screen-title">
+                <p class="eyebrow">Family setup</p>
+                <h3>Personalize Dotti</h3>
+              </div>
+              <form class="profile-form" id="profileForm">
+                <label>Parent name<input name="parentName" value="Noa"></label>
+                <label>Child name<input name="childName" value="Maya"></label>
+                <label>Child age<input name="childAge" value="5"></label>
+                <label>Main routine
+                  <select name="routine">
+                    <option>School pickup</option>
+                    <option>Morning routine</option>
+                    <option>Bedtime</option>
+                    <option>Weekend planning</option>
+                  </select>
+                </label>
+                <button class="button primary" type="submit">Save profile</button>
+              </form>
+            </section>
+
+            <nav class="bottom-nav" aria-label="Mobile app navigation">
+              <button class="nav-tab is-active" type="button" data-view-link="home">Home</button>
+              <button class="nav-tab" type="button" data-view-link="tasks">Tasks</button>
+              <button class="nav-tab" type="button" data-view-link="plan">Plan</button>
+              <button class="nav-tab" type="button" data-view-link="assistant">Ask</button>
+            </nav>
+          </div>
         </section>
 
-        <nav class="mobile-nav" aria-label="ניווט במובייל">
-          <button class="nav-item is-active" type="button" data-view-link="home">בית</button>
-          <button class="nav-item" type="button" data-view-link="tasks">משימות</button>
-          <button class="nav-item" type="button" data-view-link="reflect">צ׳ק אין</button>
-          <button class="nav-item" type="button" data-view-link="plan">תכנון</button>
-        </nav>
+        <aside class="insight-panel">
+          <p class="eyebrow">Prototype notes</p>
+          <h3>Built to feel like the original Dotti concept.</h3>
+          <p>Light surface, acid-green highlights, friendly mascot, calm task cards, guided choices, and a compact mobile-first flow.</p>
+          <div class="need-cloud" id="needCloud"></div>
+          <span class="status-pill coral" id="needsCount">3 active</span>
+        </aside>
       </section>
     </main>
-    <script src="script.js?v=20260706-he-1"></script>
+    <script src="script.js?v=20260706-en-design-1"></script>
   </body>
 </html>
