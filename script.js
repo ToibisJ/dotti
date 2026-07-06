@@ -29,8 +29,8 @@ if (sessionStorage.getItem("dotti-preview-authenticated") === "true") {
 loginForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(loginForm);
-  const username = String(formData.get("username") || "").trim();
-  const password = String(formData.get("password") || "");
+  const username = String(formData.get("username") || "").trim().toLowerCase();
+  const password = String(formData.get("password") || "").trim().toLowerCase();
 
   if (username === credentials.username && password === credentials.password) {
     loginError.textContent = "";
