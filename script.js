@@ -12,6 +12,7 @@ const defaultState = {
   needs: ["Transitions", "Bedtime", "Emotional regulation"],
   note: "",
   completedTasks: [],
+  completedDailyTasks: [],
   messages: [
     {
       role: "dotti",
@@ -46,6 +47,9 @@ const reflectionNote = document.querySelector("#reflectionNote");
 const recommendationText = document.querySelector("#recommendationText");
 const planBoard = document.querySelector("#planBoard");
 const generatePlan = document.querySelector("#generatePlan");
+const taskCategory = document.querySelector("#taskCategory");
+const dailyTaskList = document.querySelector("#dailyTaskList");
+const clearDailyTasks = document.querySelector("#clearDailyTasks");
 const chatLog = document.querySelector("#chatLog");
 const chatForm = document.querySelector("#chatForm");
 const chatInput = document.querySelector("#chatInput");
@@ -88,6 +92,60 @@ const routineTemplates = {
     ["17:30", "Evening preview", "Tell the child what happens before bedtime."]
   ]
 };
+
+const dailyTasks = [
+  { id: "shop-diapers", category: "Shopping", title: "Buy diapers", body: "Check size before leaving and buy a backup pack if you are low." },
+  { id: "shop-wipes", category: "Shopping", title: "Buy wet wipes", body: "Add one pack for home and one small pack for the bag." },
+  { id: "shop-formula", category: "Shopping", title: "Buy formula or milk", body: "Check the exact brand and stage before checkout." },
+  { id: "shop-groceries", category: "Shopping", title: "Go to the grocery store", body: "Bread, eggs, fruit, yogurt, vegetables, and one easy dinner option." },
+  { id: "shop-snacks", category: "Shopping", title: "Restock kids' snacks", body: "Choose two simple snacks for school, pickup, or the car." },
+  { id: "shop-medicine", category: "Shopping", title: "Restock basic medicine", body: "Check thermometer, fever reducer, saline, and plasters." },
+  { id: "shop-bag-items", category: "Shopping", title: "Refill stroller or diaper bag", body: "Diapers, wipes, spare clothes, snack, water, and a small toy." },
+  { id: "baby-change", category: "Baby care", title: "Change diaper before leaving", body: "Do it before the transition so leaving the house is easier." },
+  { id: "baby-cream", category: "Baby care", title: "Apply diaper cream", body: "Use cream if there is redness or after a long diaper stretch." },
+  { id: "baby-bath", category: "Baby care", title: "Prepare bath", body: "Towel, pajamas, diaper, cream, and clothes ready before water." },
+  { id: "baby-clothes", category: "Baby care", title: "Pack spare clothes", body: "One full outfit, socks, and a plastic bag for dirty clothes." },
+  { id: "baby-nails", category: "Baby care", title: "Trim nails", body: "Do it after bath or sleep when the child is calmer." },
+  { id: "baby-sunscreen", category: "Baby care", title: "Apply sunscreen", body: "Use before playground, pickup walk, or any outdoor plan." },
+  { id: "baby-water", category: "Baby care", title: "Fill child water bottle", body: "Put it near the door or inside the school bag." },
+  { id: "food-breakfast", category: "Food", title: "Prepare breakfast", body: "Keep it simple: protein, fruit, and one familiar option." },
+  { id: "food-lunchbox", category: "Food", title: "Pack lunchbox", body: "Main item, fruit, snack, water, and napkin." },
+  { id: "food-dinner", category: "Food", title: "Plan easy dinner", body: "Pick one meal that can survive interruptions." },
+  { id: "food-defrost", category: "Food", title: "Defrost dinner item", body: "Move it from freezer to fridge early in the day." },
+  { id: "food-bottles", category: "Food", title: "Wash bottles or cups", body: "Wash, dry, and place them where morning routine starts." },
+  { id: "food-fruit", category: "Food", title: "Cut fruit for later", body: "Prepare a small container for pickup or after school." },
+  { id: "food-grocery-list", category: "Food", title: "Write grocery list", body: "Add only what is missing for the next two days." },
+  { id: "home-laundry", category: "Home", title: "Do kids' laundry", body: "Start one small load: pajamas, socks, school clothes." },
+  { id: "home-fold", category: "Home", title: "Fold clean clothes", body: "Focus only on child clothes if time is short." },
+  { id: "home-dishes", category: "Home", title: "Run dishwasher", body: "Clear bottles, lunchboxes, and dinner dishes first." },
+  { id: "home-trash", category: "Home", title: "Take out trash", body: "Include diaper bin or bathroom trash if needed." },
+  { id: "home-toys", category: "Home", title: "Reset toy area", body: "Use one basket reset, not a full cleanup." },
+  { id: "home-bag", category: "Home", title: "Prepare tomorrow's bag", body: "Clothes, water, forms, lunchbox, and comfort item." },
+  { id: "home-car", category: "Home", title: "Clean car seat area", body: "Remove crumbs, old snacks, wet wipes, and trash." },
+  { id: "school-form", category: "School", title: "Sign school form", body: "Check bag, messages, and parent group reminders." },
+  { id: "school-clothes", category: "School", title: "Lay out school clothes", body: "Choose clothes at night to reduce morning decisions." },
+  { id: "school-message", category: "School", title: "Message teacher or daycare", body: "Send updates about pickup, medicine, or missing items." },
+  { id: "school-payment", category: "School", title: "Pay school or activity fee", body: "Handle it now if it is blocking registration." },
+  { id: "school-showtell", category: "School", title: "Prepare show-and-tell item", body: "Put it in the bag before bedtime." },
+  { id: "school-activity", category: "School", title: "Pack activity gear", body: "Shoes, swimsuit, towel, instrument, or sports clothes." },
+  { id: "health-appointment", category: "Health", title: "Book doctor appointment", body: "Add symptoms, preferred hours, and child ID if needed." },
+  { id: "health-medicine", category: "Health", title: "Give medicine on time", body: "Set a timer and write down the dose time." },
+  { id: "health-vitamins", category: "Health", title: "Give vitamins", body: "Attach it to breakfast or tooth brushing." },
+  { id: "health-temperature", category: "Health", title: "Check temperature", body: "Log the time and result if the child is sick." },
+  { id: "health-insurance", category: "Health", title: "Upload insurance document", body: "Take a photo and save it before you forget." },
+  { id: "health-dentist", category: "Health", title: "Schedule dentist checkup", body: "Pick a morning slot if the child handles it better." },
+  { id: "sleep-pajamas", category: "Sleep", title: "Set pajamas and diaper", body: "Put them in the bathroom before bath starts." },
+  { id: "sleep-story", category: "Sleep", title: "Choose bedtime story", body: "Offer two books, not the whole shelf." },
+  { id: "sleep-room", category: "Sleep", title: "Prepare sleep room", body: "Dim light, water, comfort item, and white noise if used." },
+  { id: "sleep-routine", category: "Sleep", title: "Start bedtime routine early", body: "Begin ten minutes before the usual friction starts." },
+  { id: "sleep-wakeup", category: "Sleep", title: "Prepare morning wake-up", body: "Clothes, bag, and breakfast idea ready tonight." },
+  { id: "admin-bills", category: "Parent admin", title: "Pay household bill", body: "Handle one bill only, then stop." },
+  { id: "admin-calendar", category: "Parent admin", title: "Update family calendar", body: "Add appointments, pickup changes, birthdays, and activities." },
+  { id: "admin-babysitter", category: "Parent admin", title: "Confirm babysitter", body: "Send time, address, food notes, and bedtime routine." },
+  { id: "admin-call", category: "Parent admin", title: "Return important call", body: "Doctor, school, insurance, delivery, or family logistics." },
+  { id: "admin-budget", category: "Parent admin", title: "Check weekly spending", body: "Look at groceries, pharmacy, school, and activities." },
+  { id: "admin-parent-rest", category: "Parent admin", title: "Plan one parent reset", body: "Ten minutes alone, shower, walk, or quiet coffee counts." }
+];
 
 function loadState() {
   const saved = localStorage.getItem("dotti-demo-state");
@@ -161,11 +219,12 @@ function getRecommendation() {
 function render() {
   const today = new Intl.DateTimeFormat("en", { weekday: "long", month: "short", day: "numeric" }).format(new Date());
   const score = Math.max(18, 100 - state.stress * 7 + state.completedTasks.length * 3);
+  const completedDailyCount = (state.completedDailyTasks || []).length;
   const plan = getPlan();
 
   todayLabel.textContent = today;
-  homeHeadline.textContent = `You have ${plan.length} guided steps for ${state.routine.toLowerCase()}.`;
-  homeSummary.textContent = `Dotti is focusing on ${state.needs.join(", ").toLowerCase()} for ${state.childName}, age ${state.childAge}.`;
+  homeHeadline.textContent = `You have ${plan.length} guided steps and ${dailyTasks.length} everyday tasks ready.`;
+  homeSummary.textContent = `Dotti is focusing on ${state.needs.join(", ").toLowerCase()} for ${state.childName}, with ${completedDailyCount} daily tasks completed.`;
   calmScore.textContent = score;
   nextAction.textContent = plan[0][2];
   stressRange.value = state.stress;
@@ -177,6 +236,7 @@ function render() {
   renderNeeds();
   renderTimeline(plan);
   renderPlan(plan);
+  renderDailyTasks();
   renderChat();
   renderProfile();
 }
@@ -219,7 +279,7 @@ function renderPlan(plan) {
     const card = document.createElement("article");
     card.className = `task-card${done ? " is-done" : ""}`;
     card.innerHTML = `
-      <button type="button" aria-label="Toggle task ${index + 1}" data-task="${index}">${done ? "✓" : ""}</button>
+        <button type="button" aria-label="Toggle task ${index + 1}" data-task="${index}">${done ? "Done" : ""}</button>
       <div>
         <span class="timeline-time">${time}</span>
         <strong>${title}</strong>
@@ -227,6 +287,30 @@ function renderPlan(plan) {
       </div>
     `;
     planBoard.append(card);
+  });
+}
+
+function renderDailyTasks() {
+  const selectedCategory = taskCategory.value || "All";
+  const completed = state.completedDailyTasks || [];
+  const visibleTasks = selectedCategory === "All"
+    ? dailyTasks
+    : dailyTasks.filter((task) => task.category === selectedCategory);
+
+  dailyTaskList.innerHTML = "";
+  visibleTasks.forEach((task) => {
+    const done = completed.includes(task.id);
+    const card = document.createElement("article");
+    card.className = `daily-task-card${done ? " is-done" : ""}`;
+    card.innerHTML = `
+      <button type="button" data-daily-task="${task.id}" aria-label="Toggle ${task.title}">${done ? "Done" : ""}</button>
+      <div>
+        <span>${task.category}</span>
+        <strong>${task.title}</strong>
+        <p>${task.body}</p>
+      </div>
+    `;
+    dailyTaskList.append(card);
   });
 }
 
@@ -294,6 +378,17 @@ document.addEventListener("click", (event) => {
     render();
   }
 
+  const dailyTaskButton = event.target.closest("[data-daily-task]");
+  if (dailyTaskButton) {
+    const taskId = dailyTaskButton.dataset.dailyTask;
+    const completed = state.completedDailyTasks || [];
+    state.completedDailyTasks = completed.includes(taskId)
+      ? completed.filter((item) => item !== taskId)
+      : [...completed, taskId];
+    saveState();
+    render();
+  }
+
   const promptButton = event.target.closest("[data-prompt]");
   if (promptButton) {
     chatInput.value = promptButton.dataset.prompt;
@@ -326,6 +421,14 @@ generatePlan.addEventListener("click", () => {
     role: "dotti",
     text: `I rebuilt the plan around ${state.needs.join(", ").toLowerCase()} and pressure level ${state.stress}.`
   });
+  saveState();
+  render();
+});
+
+taskCategory.addEventListener("change", renderDailyTasks);
+
+clearDailyTasks.addEventListener("click", () => {
+  state.completedDailyTasks = [];
   saveState();
   render();
 });

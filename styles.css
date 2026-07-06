@@ -380,7 +380,8 @@ input[type="range"] {
 }
 
 .timeline-item,
-.task-card {
+.task-card,
+.daily-task-card {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 12px;
@@ -398,13 +399,15 @@ input[type="range"] {
 }
 
 .timeline-item strong,
-.task-card strong {
+.task-card strong,
+.daily-task-card strong {
   display: block;
   margin-bottom: 4px;
 }
 
 .timeline-item p,
-.task-card p {
+.task-card p,
+.daily-task-card p {
   margin: 0;
   color: var(--muted);
   font-size: 0.92rem;
@@ -487,19 +490,24 @@ input[type="range"] {
   min-height: 188px;
 }
 
-.task-card button {
+.task-card button,
+.daily-task-card button {
   width: 28px;
   height: 28px;
   border: 1px solid var(--ink);
   border-radius: 50%;
   background: #fff;
+  overflow: hidden;
+  color: transparent;
 }
 
-.task-card.is-done {
+.task-card.is-done,
+.daily-task-card.is-done {
   background: #eff7f3;
 }
 
-.task-card.is-done button {
+.task-card.is-done button,
+.daily-task-card.is-done button {
   background: var(--mint);
 }
 
@@ -509,6 +517,48 @@ input[type="range"] {
   justify-content: space-between;
   gap: 16px;
   margin-top: 16px;
+}
+
+.daily-task-section {
+  margin-top: 28px;
+}
+
+.section-title.compact h3 {
+  max-width: 860px;
+  font-size: clamp(1.8rem, 3.5vw, 3.4rem);
+}
+
+.task-filter {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) auto;
+  align-items: end;
+  gap: 14px;
+  margin-bottom: 14px;
+  box-shadow: none;
+}
+
+.task-filter label {
+  margin-top: 0;
+}
+
+.daily-task-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.daily-task-card {
+  grid-template-columns: 28px minmax(0, 1fr);
+  min-height: 142px;
+}
+
+.daily-task-card span {
+  display: inline-flex;
+  margin-bottom: 7px;
+  color: var(--teal);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
 .chat-panel {
@@ -592,7 +642,8 @@ input[type="range"] {
   }
 
   .dashboard-grid,
-  .plan-board {
+  .plan-board,
+  .daily-task-grid {
     grid-template-columns: 1fr;
   }
 
@@ -629,8 +680,10 @@ input[type="range"] {
   }
 
   .app-header,
-  .plan-tools {
+  .plan-tools,
+  .task-filter {
     align-items: stretch;
+    grid-template-columns: 1fr;
     flex-direction: column;
   }
 

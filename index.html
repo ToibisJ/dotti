@@ -142,6 +142,28 @@
               </div>
               <button class="button primary" type="button" id="generatePlan">Generate plan</button>
             </div>
+            <div class="daily-task-section">
+              <div class="section-title compact">
+                <p class="eyebrow">Everyday task bank</p>
+                <h3>Real things parents need to remember</h3>
+              </div>
+              <div class="task-filter panel">
+                <label for="taskCategory">Show category</label>
+                <select id="taskCategory">
+                  <option value="All">All tasks</option>
+                  <option value="Shopping">Shopping</option>
+                  <option value="Baby care">Baby care</option>
+                  <option value="Food">Food</option>
+                  <option value="Home">Home</option>
+                  <option value="School">School</option>
+                  <option value="Health">Health</option>
+                  <option value="Sleep">Sleep</option>
+                  <option value="Parent admin">Parent admin</option>
+                </select>
+                <button class="button quiet" type="button" id="clearDailyTasks">Clear completed</button>
+              </div>
+              <div class="daily-task-grid" id="dailyTaskList"></div>
+            </div>
           </section>
 
           <section class="view" id="assistantView" data-view="assistant">
