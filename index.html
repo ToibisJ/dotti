@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Dotti UX/UI case study presentation site.">
+    <title>Dotti | UX/UI Case Study</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main>
+      <section class="login-view" id="loginView" aria-labelledby="loginTitle">
+        <div class="brand-mark" aria-hidden="true">
+          <img src="assets/dotti-see-u-soon.png" alt="">
+        </div>
+        <form class="login-panel" id="loginForm">
+          <p class="eyebrow">Private preview</p>
+          <h1 id="loginTitle">Dotti</h1>
+          <p class="login-copy">A quiet preview space for the UX/UI case study and product story.</p>
+          <label for="username">Username</label>
+          <input id="username" name="username" autocomplete="username" required>
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+          <p class="error-message" id="loginError" role="alert"></p>
+          <button type="submit">Enter preview</button>
+        </form>
+      </section>
+
+      <section class="site-view is-hidden" id="siteView">
+        <header class="hero">
+          <nav class="topbar" aria-label="Primary navigation">
+            <a class="wordmark" href="#overview">Dotti</a>
+            <div class="nav-links">
+              <a href="#story">Story</a>
+              <a href="#research">Research</a>
+              <a href="#screens">Screens</a>
+              <button class="ghost-button" id="lockButton" type="button">Lock</button>
+            </div>
+          </nav>
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <p class="eyebrow">UX/UI design case study</p>
+              <h2>AI support for calmer parenting days.</h2>
+              <p>Dotti turns scattered parenting pressure into a guided, supportive daily experience: reflection, planning, reassurance, and next steps in one friendly product system.</p>
+              <div class="hero-actions">
+                <a class="primary-link" href="#screens">View screens</a>
+                <a class="secondary-link" href="#research">Read insights</a>
+              </div>
+            </div>
+            <figure class="phone-preview">
+              <img src="assets/dotti-case-study.jpg" alt="Dotti case study overview with app screens and research sections." fetchpriority="high">
+            </figure>
+          </div>
+        </header>
+
+        <section class="summary-band" id="overview" aria-label="Project summary">
+          <article>
+            <span>Role</span>
+            <strong>UX research, UI design, branding</strong>
+          </article>
+          <article>
+            <span>Product</span>
+            <strong>AI companion app for parents</strong>
+          </article>
+          <article>
+            <span>Focus</span>
+            <strong>Calm, trust, guided decisions</strong>
+          </article>
+        </section>
+
+        <section class="content-section split" id="story">
+          <div>
+            <p class="eyebrow">Product idea</p>
+            <h2>From chaos to calm, one assisted step at a time.</h2>
+          </div>
+          <div class="text-stack">
+            <p>Dotti is designed around the emotional load of parenting: many small decisions, limited energy, and a need for support that feels immediate without becoming clinical or cold.</p>
+            <p>The visual language balances a playful character with structured flows, giving the product warmth while keeping the interface clean enough for repeated daily use.</p>
+          </div>
+        </section>
+
+        <section class="content-section" id="research">
+          <div class="section-heading">
+            <p class="eyebrow">Research signals</p>
+            <h2>What the case study surfaces</h2>
+          </div>
+          <div class="insight-grid">
+            <article>
+              <span>01</span>
+              <h3>Parents need relief from mental clutter.</h3>
+              <p>The experience emphasizes quick orientation, gentle prompts, and visible progress instead of dense dashboards.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Trust matters before automation.</h3>
+              <p>The design uses human wording, transparent task cards, and small guided actions to make AI feel supportive.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Daily rhythm beats one-time setup.</h3>
+              <p>Flows are organized around recurring needs: overview, reflection, selected tasks, and assisted recommendations.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="process-band" id="screens">
+          <div class="section-heading">
+            <p class="eyebrow">Design process</p>
+            <h2>Wireframes, component logic, and final screens</h2>
+          </div>
+          <figure class="process-image">
+            <img src="assets/dotti-process.jpg" alt="Dotti component library and mobile screen design process." loading="lazy">
+          </figure>
+        </section>
+
+        <section class="content-section final-note">
+          <img src="assets/dotti-see-u-soon.png" alt="Dotti mascot with See U Soon message." loading="lazy">
+          <div>
+            <p class="eyebrow">Preview built for sharing</p>
+            <h2>A focused live page for the designer to review.</h2>
+            <p>This page is a compact presentation layer based on the Behance case study assets, prepared for private viewing and GitHub Pages deployment.</p>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
